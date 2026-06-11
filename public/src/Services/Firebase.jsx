@@ -4,12 +4,12 @@ import { getFirestore } from 'firebase/firestore'
 
 // GANTI DENGAN CONFIG FIREBASE LO SENDIRI!
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_STORAGE_BUCKET",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyBc40PhCjvxQvr3GqactJd3zkZqELhW0VA",
+  authDomain: "cybernoir-game.firebaseapp.com",
+  projectId: "cybernoir-game",
+  storageBucket: "cybernoir-game.firebasestorage.app",
+  messagingSenderId: "1093030267928",
+  appId: "1:1093030267928:web:52fffcadc4a35118c9076d"
 }
 
 const app = initializeApp(firebaseConfig)
