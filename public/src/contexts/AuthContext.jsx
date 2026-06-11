@@ -1,7 +1,16 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile } from 'firebase/auth'
-import { auth, db } from '../services/firebase'
-import { doc, setDoc, getDoc } from 'firebase/firestore'
+import { 
+  auth, 
+  db, 
+  createUserWithEmailAndPassword, 
+  signInWithEmailAndPassword, 
+  signOut, 
+  onAuthStateChanged, 
+  updateProfile,
+  doc, 
+  setDoc, 
+  getDoc 
+} from '../services/firebase'
 
 const AuthContext = createContext()
 
@@ -16,11 +25,17 @@ export const AuthProvider = ({ children }) => {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password)
       await updateProfile(userCredential.user, { displayName: username })
       await setDoc(doc(db, 'players', userCredential.user.uid), {
-        username, email, level: 1, experience: 0, casesSolved: 0,
-        achievements: [], createdAt: new Date().toISOString()
+        username: username,
+        email: email,
+        level: 1,
+        experience: 0,
+        casesSolved: 0,
+        achievements: [],
+        createdAt: new Date().toISOString()
       })
       return { success: true }
     } catch (error) {
+      console.error('Register error:', error)
       return { success: false, error: error.message }
     }
   }
@@ -30,6 +45,7 @@ export const AuthProvider = ({ children }) => {
       await signInWithEmailAndPassword(auth, email, password)
       return { success: true }
     } catch (error) {
+      console.error('Login error:', error)
       return { success: false, error: error.message }
     }
   }
@@ -39,6 +55,7 @@ export const AuthProvider = ({ children }) => {
       await signOut(auth)
       return { success: true }
     } catch (error) {
+      console.error('Logout error:', error)
       return { success: false, error: error.message }
     }
   }
@@ -46,8 +63,16 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
-        const playerDoc = await getDoc(doc(db, 'players', user.uid))
-        setUser({ ...user, playerData: playerDoc.data() })
+        try {
+          const playerDoc = await getDoc(doc(db, 'players', user.uid))
+          setUser({ 
+            ...user, 
+            playerData: playerDoc.exists() ? playerDoc.data() : null 
+          })
+        } catch (error) {
+          console.error('Error loading player data:', error)
+          setUser(user)
+        }
       } else {
         setUser(null)
       }
