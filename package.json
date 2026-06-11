@@ -2,9 +2,6 @@
   "name": "cybernoir-detective-game",
   "version": "1.0.0",
   "type": "module",
-  "description": "Cyberpunk detective investigation game with OSINT mechanics",
-  "author": "Your Name",
-  "license": "MIT",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -14,7 +11,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.20.0",
-    "firebase": "^10.7.0",
+    "firebase": "^9.22.0",
     "framer-motion": "^10.16.16",
     "react-hot-toast": "^2.4.1",
     "react-dnd": "^16.0.1",
